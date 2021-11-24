@@ -6,15 +6,49 @@ package br.com.customerM.screems;
 
 import java.sql.*;
 import br.com.customerM.dal.ConnectionModule;
+import javax.swing.JOptionPane;
+import br.com.customerM.screems.MainScreen;
+
 
 /**
  *
  * @author f0fp1241
  */
 public class ScreemLogin extends javax.swing.JFrame {
+    
 Connection connection = null;
 PreparedStatement pst = null;
 ResultSet rs = null;
+
+public void toLog(){
+
+    String sql="select*from tbusers where login=? and pass_word=?";
+    try {
+        // the lines below prepare the search to base in function of what
+        //was typed in the text box. The ? is substituted by content of variables
+        pst = connection.prepareStatement(sql);
+        pst.setString(1, txtUser.getText());
+        pst.setString(2, txtPassword.getText());
+        
+        //the line below execute the Query
+        rs = pst.executeQuery();
+        
+        // if exist user and password corresponding
+        if(rs.next()){
+            
+        MainScreen main = new MainScreen();
+        main.setVisible(true);
+        }else{
+        
+            JOptionPane.showMessageDialog(null, "invalid user and/or password");
+        }
+        
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e);
+    }
+
+}
     /**
      * Creates new form ScreemLogin
      */
@@ -42,9 +76,9 @@ ResultSet rs = null;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtUser = new javax.swing.JTextField();
         btnLogin = new javax.swing.JToggleButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtPassword = new javax.swing.JPasswordField();
         dbstatus = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
@@ -58,6 +92,11 @@ ResultSet rs = null;
         jLabel3.setText("Password");
 
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         dbstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/dberror.png"))); // NOI18N
 
@@ -78,8 +117,8 @@ ResultSet rs = null;
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))))
+                            .addComponent(txtUser)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))))
                 .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -88,11 +127,11 @@ ResultSet rs = null;
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogin)
@@ -103,6 +142,11 @@ ResultSet rs = null;
         setSize(new java.awt.Dimension(377, 206));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // calling the log method
+        toLog();
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,7 +189,7 @@ ResultSet rs = null;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
