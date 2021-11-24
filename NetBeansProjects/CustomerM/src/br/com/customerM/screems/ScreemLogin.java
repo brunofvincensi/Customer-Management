@@ -28,7 +28,8 @@ public void toLog(){
         //was typed in the text box. The ? is substituted by content of variables
         pst = connection.prepareStatement(sql);
         pst.setString(1, txtUser.getText());
-        pst.setString(2, txtPassword.getText());
+        String print = new String(txtPassword.getPassword());
+        pst.setString(2, print);
         
         //the line below execute the Query
         rs = pst.executeQuery();
@@ -38,6 +39,8 @@ public void toLog(){
             
         MainScreen main = new MainScreen();
         main.setVisible(true);
+        this.dispose();
+        connection.close();
         }else{
         
             JOptionPane.showMessageDialog(null, "invalid user and/or password");
