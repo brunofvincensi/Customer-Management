@@ -4,17 +4,30 @@
  */
 package br.com.customerM.screems;
 
+import java.sql.*;
+import br.com.customerM.dal.ConnectionModule;
+
 /**
  *
  * @author f0fp1241
  */
 public class ScreemLogin extends javax.swing.JFrame {
-
+Connection connection = null;
+PreparedStatement pst = null;
+ResultSet rs = null;
     /**
      * Creates new form ScreemLogin
      */
     public ScreemLogin() {
         initComponents();
+        connection = ConnectionModule.conector();
+        //System.out.println(connection);
+        
+        if (connection != null){
+        dbstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/dbok.png")));
+        }else{
+        dbstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/dberror.png")));
+        }
     }
 
     /**
@@ -32,6 +45,7 @@ public class ScreemLogin extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         btnLogin = new javax.swing.JToggleButton();
         jPasswordField1 = new javax.swing.JPasswordField();
+        dbstatus = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -45,14 +59,19 @@ public class ScreemLogin extends javax.swing.JFrame {
 
         btnLogin.setText("Login");
 
+        dbstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/dberror.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLogin)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(dbstatus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
+                        .addComponent(btnLogin))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -61,7 +80,7 @@ public class ScreemLogin extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField1)
                             .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE))))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,11 +94,13 @@ public class ScreemLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
-                .addComponent(btnLogin)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin)
+                    .addComponent(dbstatus))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(377, 206));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -120,6 +141,7 @@ public class ScreemLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnLogin;
+    private javax.swing.JLabel dbstatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
