@@ -102,6 +102,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         MenRegUse.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
         MenRegUse.setText("Users");
+        MenRegUse.setEnabled(false);
         MenReg.add(MenRegUse);
 
         Menu.add(MenReg);
@@ -110,6 +111,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         MenRepSer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
         MenRepSer.setText("Service");
+        MenRepSer.setEnabled(false);
         MenRepSer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MenRepSerActionPerformed(evt);
@@ -123,6 +125,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         MenHelpAbo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_DOWN_MASK));
         MenHelpAbo.setText("About");
+        MenHelpAbo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenHelpAboActionPerformed(evt);
+            }
+        });
         MenHelp.add(MenHelpAbo);
 
         Menu.add(MenHelp);
@@ -194,6 +201,11 @@ public class MainScreen extends javax.swing.JFrame {
         lblDate.setText(format.format(date));
     }//GEN-LAST:event_formWindowActivated
 
+    private void MenHelpAboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenHelpAboActionPerformed
+        AboutScreen about = new AboutScreen();
+        about.setVisible(true);
+    }//GEN-LAST:event_MenHelpAboActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,9 +249,9 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenu MenReg;
     private javax.swing.JMenuItem MenRegCli;
     private javax.swing.JMenuItem MenRegOs;
-    private javax.swing.JMenuItem MenRegUse;
+    public static javax.swing.JMenuItem MenRegUse;
     private javax.swing.JMenu MenRep;
-    private javax.swing.JMenuItem MenRepSer;
+    public static javax.swing.JMenuItem MenRepSer;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;

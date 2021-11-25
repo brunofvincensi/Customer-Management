@@ -36,11 +36,23 @@ public void toLog(){
         
         // if exist user and password corresponding
         if(rs.next()){
+            //the line below get the camp content of the table tbusers
+            String profile = rs.getString(6);
+            //System.out.println(profile);
+            //the structure below do the handling of the user profile
+            if(profile.equals("admin")){
+            MainScreen main = new MainScreen();
+            main.setVisible(true);
+            MainScreen.MenRepSer.setEnabled(true);
+            MainScreen.MenRegUse.setEnabled(true);
+            this.dispose();
+            }else{
+
             
         MainScreen main = new MainScreen();
         main.setVisible(true);
         this.dispose();
-        connection.close();
+        connection.close();}
         }else{
         
             JOptionPane.showMessageDialog(null, "invalid user and/or password");
