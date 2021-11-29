@@ -38,6 +38,7 @@ public class MainScreen extends javax.swing.JFrame {
         jDesktopPane1 = new javax.swing.JDesktopPane();
         lblUser = new javax.swing.JLabel();
         lblDate = new javax.swing.JLabel();
+        desktop = new javax.swing.JDesktopPane();
         Menu = new javax.swing.JMenuBar();
         menReg = new javax.swing.JMenu();
         menRegCli = new javax.swing.JMenuItem();
@@ -85,7 +86,23 @@ public class MainScreen extends javax.swing.JFrame {
         lblDate.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblDate.setText("Date");
 
+        javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
+        desktop.setLayout(desktopLayout);
+        desktopLayout.setHorizontalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 560, Short.MAX_VALUE)
+        );
+        desktopLayout.setVerticalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 487, Short.MAX_VALUE)
+        );
+
         menReg.setText("Registration");
+        menReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menRegActionPerformed(evt);
+            }
+        });
 
         menRegCli.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
         menRegCli.setText("Client");
@@ -103,6 +120,11 @@ public class MainScreen extends javax.swing.JFrame {
         menRegUse.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
         menRegUse.setText("Users");
         menRegUse.setEnabled(false);
+        menRegUse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menRegUseActionPerformed(evt);
+            }
+        });
         menReg.add(menRegUse);
 
         Menu.add(menReg);
@@ -161,7 +183,12 @@ public class MainScreen extends javax.swing.JFrame {
                         .addGap(87, 87, 87))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lblDate)
-                        .addGap(123, 123, 123))))
+                        .addGap(79, 79, 79))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(desktop)
+                    .addContainerGap(231, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,6 +198,10 @@ public class MainScreen extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblDate)
                 .addContainerGap(373, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(desktop)
+                    .addContainerGap()))
         );
 
         setBounds(0, 0, 817, 559);
@@ -205,6 +236,16 @@ public class MainScreen extends javax.swing.JFrame {
         AboutScreen about = new AboutScreen();
         about.setVisible(true);
     }//GEN-LAST:event_menHelpAboActionPerformed
+
+    private void menRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRegActionPerformed
+    
+    }//GEN-LAST:event_menRegActionPerformed
+
+    private void menRegUseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRegUseActionPerformed
+        UserScreen user = new UserScreen();
+        user.setVisible(true);
+        desktop.add(user);
+    }//GEN-LAST:event_menRegUseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,6 +284,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar Menu;
+    private javax.swing.JDesktopPane desktop;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
