@@ -53,7 +53,6 @@ public class UserScreen extends javax.swing.JInternalFrame {
                 txtUserFone.setText(null);
                 txtUserLog.setText(null);
                 txtUserPass.setText(null);
-                cboUserProfile.setSelectedItem(null);
 
             }
            
@@ -77,9 +76,23 @@ public class UserScreen extends javax.swing.JInternalFrame {
              pst.setString(5, txtUserPass.getText());
              pst.setString(6, cboUserProfile.getSelectedItem().toString());
              
-             pst.executeUpdate();
              
-             JOptionPane.showMessageDialog(null, "registered user");
+             if (txtUserId.getText().isEmpty() || txtUserName.getText().isEmpty() || txtUserLog.getText().isEmpty()
+                     || txtUserPass.getText().isEmpty() || cboUserProfile.getSelectedItem().toString().isEmpty()) {
+                 
+                JOptionPane.showMessageDialog(null, "fill all fields");
+                
+            } else {
+            
+             
+             
+             int added = pst.executeUpdate();
+             System.out.println(added);
+             
+             if(added > 0){
+             JOptionPane.showMessageDialog(null, "registered user with success");
+
+             }
              
                 txtUserId.setText(null);
                 txtUserName.setText(null);
@@ -88,7 +101,8 @@ public class UserScreen extends javax.swing.JInternalFrame {
                 txtUserPass.setText(null);
                 cboUserProfile.setSelectedItem(null);
              
-        } catch (Exception e) {
+        } }
+        catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     
@@ -120,6 +134,7 @@ public class UserScreen extends javax.swing.JInternalFrame {
         btnUserRead = new javax.swing.JButton();
         btnUserUpdate = new javax.swing.JButton();
         btnUserDelete = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -181,6 +196,8 @@ public class UserScreen extends javax.swing.JInternalFrame {
         btnUserDelete.setToolTipText("Delete");
         btnUserDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        jLabel7.setText("* Required Fields ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,10 +207,6 @@ public class UserScreen extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(35, 35, 35)
-                                .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(28, 28, 28)
@@ -226,7 +239,14 @@ public class UserScreen extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtUserFone, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(31, 31, 31))))
+                        .addGap(31, 31, 31))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(35, 35, 35)
+                        .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
+                        .addGap(168, 168, 168))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnUserCreate, btnUserDelete, btnUserRead, btnUserUpdate});
@@ -237,7 +257,8 @@ public class UserScreen extends javax.swing.JInternalFrame {
                 .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -298,6 +319,7 @@ public class UserScreen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField txtUserFone;
     private javax.swing.JTextField txtUserId;
     private javax.swing.JTextField txtUserLog;
