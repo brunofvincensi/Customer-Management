@@ -39,16 +39,16 @@ public class MainScreen extends javax.swing.JFrame {
         lblUser = new javax.swing.JLabel();
         lblDate = new javax.swing.JLabel();
         Menu = new javax.swing.JMenuBar();
-        MenReg = new javax.swing.JMenu();
-        MenRegCli = new javax.swing.JMenuItem();
-        MenRegOs = new javax.swing.JMenuItem();
-        MenRegUse = new javax.swing.JMenuItem();
-        MenRep = new javax.swing.JMenu();
-        MenRepSer = new javax.swing.JMenuItem();
-        MenHelp = new javax.swing.JMenu();
-        MenHelpAbo = new javax.swing.JMenuItem();
-        MenOpt = new javax.swing.JMenu();
-        MenOptExit = new javax.swing.JMenuItem();
+        menReg = new javax.swing.JMenu();
+        menRegCli = new javax.swing.JMenuItem();
+        menRegOs = new javax.swing.JMenuItem();
+        menRegUse = new javax.swing.JMenuItem();
+        menRep = new javax.swing.JMenu();
+        menRepSer = new javax.swing.JMenuItem();
+        menHelp = new javax.swing.JMenu();
+        menHelpAbo = new javax.swing.JMenuItem();
+        menOpt = new javax.swing.JMenu();
+        menOptExit = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -85,67 +85,67 @@ public class MainScreen extends javax.swing.JFrame {
         lblDate.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblDate.setText("Date");
 
-        MenReg.setText("Registration");
+        menReg.setText("Registration");
 
-        MenRegCli.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        MenRegCli.setText("Client");
-        MenReg.add(MenRegCli);
+        menRegCli.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        menRegCli.setText("Client");
+        menReg.add(menRegCli);
 
-        MenRegOs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        MenRegOs.setText("OS");
-        MenRegOs.addActionListener(new java.awt.event.ActionListener() {
+        menRegOs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        menRegOs.setText("OS");
+        menRegOs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenRegOsActionPerformed(evt);
+                menRegOsActionPerformed(evt);
             }
         });
-        MenReg.add(MenRegOs);
+        menReg.add(menRegOs);
 
-        MenRegUse.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        MenRegUse.setText("Users");
-        MenRegUse.setEnabled(false);
-        MenReg.add(MenRegUse);
+        menRegUse.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        menRegUse.setText("Users");
+        menRegUse.setEnabled(false);
+        menReg.add(menRegUse);
 
-        Menu.add(MenReg);
+        Menu.add(menReg);
 
-        MenRep.setText("Report");
+        menRep.setText("Report");
 
-        MenRepSer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        MenRepSer.setText("Service");
-        MenRepSer.setEnabled(false);
-        MenRepSer.addActionListener(new java.awt.event.ActionListener() {
+        menRepSer.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        menRepSer.setText("Service");
+        menRepSer.setEnabled(false);
+        menRepSer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenRepSerActionPerformed(evt);
+                menRepSerActionPerformed(evt);
             }
         });
-        MenRep.add(MenRepSer);
+        menRep.add(menRepSer);
 
-        Menu.add(MenRep);
+        Menu.add(menRep);
 
-        MenHelp.setText("Help");
+        menHelp.setText("Help");
 
-        MenHelpAbo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        MenHelpAbo.setText("About");
-        MenHelpAbo.addActionListener(new java.awt.event.ActionListener() {
+        menHelpAbo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        menHelpAbo.setText("About");
+        menHelpAbo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenHelpAboActionPerformed(evt);
+                menHelpAboActionPerformed(evt);
             }
         });
-        MenHelp.add(MenHelpAbo);
+        menHelp.add(menHelpAbo);
 
-        Menu.add(MenHelp);
+        Menu.add(menHelp);
 
-        MenOpt.setText("Options");
+        menOpt.setText("Options");
 
-        MenOptExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        MenOptExit.setText("Exit");
-        MenOptExit.addActionListener(new java.awt.event.ActionListener() {
+        menOptExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        menOptExit.setText("Exit");
+        menOptExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenOptExitActionPerformed(evt);
+                menOptExitActionPerformed(evt);
             }
         });
-        MenOpt.add(MenOptExit);
+        menOpt.add(menOptExit);
 
-        Menu.add(MenOpt);
+        Menu.add(menOpt);
 
         setJMenuBar(Menu);
 
@@ -176,21 +176,21 @@ public class MainScreen extends javax.swing.JFrame {
         setBounds(0, 0, 817, 559);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void MenRegOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenRegOsActionPerformed
+    private void menRegOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRegOsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MenRegOsActionPerformed
+    }//GEN-LAST:event_menRegOsActionPerformed
 
-    private void MenRepSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenRepSerActionPerformed
+    private void menRepSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRepSerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_MenRepSerActionPerformed
+    }//GEN-LAST:event_menRepSerActionPerformed
 
-    private void MenOptExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenOptExitActionPerformed
+    private void menOptExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menOptExitActionPerformed
         // show a dialog text
         int exit = JOptionPane.showConfirmDialog(null, "Are you shure to exit?", "Attention", JOptionPane.YES_NO_OPTION);
         if(exit == JOptionPane.YES_OPTION){
         System.exit(0);
         }
-    }//GEN-LAST:event_MenOptExitActionPerformed
+    }//GEN-LAST:event_menOptExitActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // the lines below exchenged the lblDate label to the current system
@@ -201,10 +201,10 @@ public class MainScreen extends javax.swing.JFrame {
         lblDate.setText(format.format(date));
     }//GEN-LAST:event_formWindowActivated
 
-    private void MenHelpAboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenHelpAboActionPerformed
+    private void menHelpAboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menHelpAboActionPerformed
         AboutScreen about = new AboutScreen();
         about.setVisible(true);
-    }//GEN-LAST:event_MenHelpAboActionPerformed
+    }//GEN-LAST:event_menHelpAboActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,16 +242,6 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu MenHelp;
-    private javax.swing.JMenuItem MenHelpAbo;
-    private javax.swing.JMenu MenOpt;
-    private javax.swing.JMenuItem MenOptExit;
-    private javax.swing.JMenu MenReg;
-    private javax.swing.JMenuItem MenRegCli;
-    private javax.swing.JMenuItem MenRegOs;
-    public static javax.swing.JMenuItem MenRegUse;
-    private javax.swing.JMenu MenRep;
-    public static javax.swing.JMenuItem MenRepSer;
     private javax.swing.JMenuBar Menu;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
@@ -260,6 +250,16 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel lblDate;
-    private javax.swing.JLabel lblUser;
+    public static javax.swing.JLabel lblUser;
+    private javax.swing.JMenu menHelp;
+    private javax.swing.JMenuItem menHelpAbo;
+    private javax.swing.JMenu menOpt;
+    private javax.swing.JMenuItem menOptExit;
+    private javax.swing.JMenu menReg;
+    private javax.swing.JMenuItem menRegCli;
+    private javax.swing.JMenuItem menRegOs;
+    public static javax.swing.JMenuItem menRegUse;
+    private javax.swing.JMenu menRep;
+    public static javax.swing.JMenuItem menRepSer;
     // End of variables declaration//GEN-END:variables
 }

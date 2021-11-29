@@ -47,12 +47,12 @@
     </Container>
     <Menu class="javax.swing.JMenuBar" name="Menu">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="MenReg">
+        <Menu class="javax.swing.JMenu" name="menReg">
           <Properties>
             <Property name="text" type="java.lang.String" value="Registration"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="MenRegCli">
+            <MenuItem class="javax.swing.JMenuItem" name="menRegCli">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+C"/>
@@ -60,7 +60,7 @@
                 <Property name="text" type="java.lang.String" value="Client"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="MenRegOs">
+            <MenuItem class="javax.swing.JMenuItem" name="menRegOs">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+O"/>
@@ -68,10 +68,10 @@
                 <Property name="text" type="java.lang.String" value="OS"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenRegOsActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menRegOsActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="MenRegUse">
+            <MenuItem class="javax.swing.JMenuItem" name="menRegUse">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+U"/>
@@ -85,12 +85,12 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="MenRep">
+        <Menu class="javax.swing.JMenu" name="menRep">
           <Properties>
             <Property name="text" type="java.lang.String" value="Report"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="MenRepSer">
+            <MenuItem class="javax.swing.JMenuItem" name="menRepSer">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+S"/>
@@ -99,7 +99,7 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenRepSerActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menRepSerActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
@@ -107,12 +107,12 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="MenHelp">
+        <Menu class="javax.swing.JMenu" name="menHelp">
           <Properties>
             <Property name="text" type="java.lang.String" value="Help"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="MenHelpAbo">
+            <MenuItem class="javax.swing.JMenuItem" name="menHelpAbo">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+F1"/>
@@ -120,17 +120,17 @@
                 <Property name="text" type="java.lang.String" value="About"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenHelpAboActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menHelpAboActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="MenOpt">
+        <Menu class="javax.swing.JMenu" name="menOpt">
           <Properties>
             <Property name="text" type="java.lang.String" value="Options"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="MenOptExit">
+            <MenuItem class="javax.swing.JMenuItem" name="menOptExit">
               <Properties>
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Alt+F4"/>
@@ -138,7 +138,7 @@
                 <Property name="text" type="java.lang.String" value="Exit"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenOptExitActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menOptExitActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -212,6 +212,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="UserName"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="lblDate">
       <Properties>

@@ -8,6 +8,7 @@ import java.sql.*;
 import br.com.customerM.dal.ConnectionModule;
 import javax.swing.JOptionPane;
 import br.com.customerM.screems.MainScreen;
+import java.awt.Color;
 
 
 /**
@@ -43,14 +44,17 @@ public void toLog(){
             if(profile.equals("admin")){
             MainScreen main = new MainScreen();
             main.setVisible(true);
-            MainScreen.MenRepSer.setEnabled(true);
-            MainScreen.MenRegUse.setEnabled(true);
+            MainScreen.menRepSer.setEnabled(true);
+            MainScreen.menRegUse.setEnabled(true);
+            MainScreen.lblUser.setText(rs.getString(2));
+            MainScreen.lblUser.setForeground(Color.red);
             this.dispose();
             }else{
 
             
         MainScreen main = new MainScreen();
         main.setVisible(true);
+        MainScreen.lblUser.setText(rs.getString(2));
         this.dispose();
         connection.close();}
         }else{
