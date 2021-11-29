@@ -108,6 +108,91 @@ public class UserScreen extends javax.swing.JInternalFrame {
     
     
     }
+    
+    // creating the method to change the user dadas
+    private void change(){
+    
+    String sql = "update tbusers set name_user=?, fone=?, login=?, pass_word=?, profile_user=? where iduser=?";
+    
+    
+        try {
+            pst = connection.prepareStatement(sql);
+            
+             pst.setString(1, txtUserName.getText());
+             pst.setString(2, txtUserFone.getText());
+             pst.setString(3, txtUserLog.getText());
+             pst.setString(4, txtUserPass.getText());
+             pst.setString(5, cboUserProfile.getSelectedItem().toString());
+              pst.setString(6, txtUserId.getText());
+             
+             if (txtUserId.getText().isEmpty() || txtUserName.getText().isEmpty() || txtUserLog.getText().isEmpty()
+                     || txtUserPass.getText().isEmpty() || cboUserProfile.getSelectedItem().toString().isEmpty()) {
+                 
+                JOptionPane.showMessageDialog(null, "fill all fields");
+                
+            } else{
+             int added = pst.executeUpdate();
+             System.out.println(added);
+             
+             if(added > 0){
+             JOptionPane.showMessageDialog(null, "changed user with success");
+
+             }
+             
+                txtUserId.setText(null);
+                txtUserName.setText(null);
+                txtUserFone.setText(null);
+                txtUserLog.setText(null);
+                txtUserPass.setText(null);
+                cboUserProfile.setSelectedItem(null);
+            
+             
+             }
+             
+             
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    
+    private void delete(){
+    
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you shure to exit?", "Attention", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION){
+            String sql = "delete from tbusers where iduser=?";
+            
+            try {
+                pst = connection.prepareStatement(sql);
+                
+                pst.setString(1, txtUserId.getText());
+               int deleted = pst.executeUpdate();
+               
+               if (deleted > 0){
+               
+               JOptionPane.showMessageDialog(null, "User removed with success");
+               
+                txtUserId.setText(null);
+                txtUserName.setText(null);
+                txtUserFone.setText(null);
+                txtUserLog.setText(null);
+                txtUserPass.setText(null);
+                cboUserProfile.setSelectedItem(null);
+               
+               }
+  
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        
+        }
+
+    
+    
+    
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -195,6 +280,11 @@ public class UserScreen extends javax.swing.JInternalFrame {
         btnUserDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/remove.png"))); // NOI18N
         btnUserDelete.setToolTipText("Delete");
         btnUserDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUserDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserDeleteActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("* Required Fields ");
 
@@ -294,7 +384,8 @@ public class UserScreen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtUserLogActionPerformed
 
     private void btnUserUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserUpdateActionPerformed
-        // TODO add your handling code here:
+        // call the change method
+        change();
     }//GEN-LAST:event_btnUserUpdateActionPerformed
 
     private void btnUserReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserReadActionPerformed
@@ -303,8 +394,14 @@ public class UserScreen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnUserReadActionPerformed
 
     private void btnUserCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserCreateActionPerformed
-       add();
+        // call the add method
+        add();
     }//GEN-LAST:event_btnUserCreateActionPerformed
+
+    private void btnUserDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserDeleteActionPerformed
+        // call the delete method
+        delete();
+    }//GEN-LAST:event_btnUserDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
