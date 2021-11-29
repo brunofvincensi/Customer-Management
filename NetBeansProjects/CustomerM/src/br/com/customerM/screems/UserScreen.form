@@ -51,7 +51,7 @@
                               <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                              <Component id="cboUserProfile" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -60,13 +60,13 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="jButton1" linkSize="3" min="-2" pref="77" max="-2" attributes="0"/>
+                              <Component id="btnUserCreate" linkSize="3" min="-2" pref="77" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                              <Component id="jButton2" linkSize="3" pref="0" max="32767" attributes="0"/>
+                              <Component id="btnUserRead" linkSize="3" pref="0" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="jButton4" linkSize="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnUserDelete" linkSize="3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="55" max="32767" attributes="0"/>
-                              <Component id="jButton3" linkSize="3" min="-2" pref="79" max="-2" attributes="0"/>
+                              <Component id="btnUserUpdate" linkSize="3" min="-2" pref="79" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -102,21 +102,21 @@
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtUserLog" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cboUserProfile" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtUserPass" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtUserFone" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="txtUserFone" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton4" linkSize="2" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton3" linkSize="2" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnUserCreate" linkSize="2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnUserDelete" linkSize="2" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnUserUpdate" linkSize="2" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnUserRead" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
           </Group>
@@ -160,7 +160,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtUserFone">
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
+    <Component class="javax.swing.JComboBox" name="cboUserProfile">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="2">
@@ -180,7 +180,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtUserPass">
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnUserCreate">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/br/com/customerM/icons/add.png"/>
@@ -193,19 +193,25 @@
           <Dimension value="[64, 64]"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserCreateActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="btnUserRead">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/br/com/customerM/icons/search.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Search"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Cursor de Seta Que Aponta para Cima"/>
+          <Color id="Cursor em Forma de M&#xe3;o"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserReadActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="btnUserUpdate">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/br/com/customerM/icons/update.png"/>
@@ -213,21 +219,21 @@
         <Property name="toolTipText" type="java.lang.String" value="Update"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Cursor de Seta Que Aponta para Cima"/>
+          <Color id="Cursor em Forma de M&#xe3;o"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserUpdateActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="btnUserDelete">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/br/com/customerM/icons/remove.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Delete"/>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Cursor de Seta Que Aponta para Cima"/>
+          <Color id="Cursor em Forma de M&#xe3;o"/>
         </Property>
       </Properties>
     </Component>

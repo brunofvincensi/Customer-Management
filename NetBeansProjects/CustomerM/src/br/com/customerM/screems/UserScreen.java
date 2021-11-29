@@ -9,11 +9,90 @@ package br.com.customerM.screems;
  *
  * @author f0fp1241
  */
+
+
+import java.sql.*;
+import br.com.customerM.dal.ConnectionModule;
+import javax.swing.JOptionPane;
+
 public class UserScreen extends javax.swing.JInternalFrame {
+    
+    Connection connection = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
     /** Creates new form UserScreen */
     public UserScreen() {
         initComponents();
+        connection = ConnectionModule.conector();
+    }
+    
+    private void search(){
+    
+    String sql = "select * from tbusers where iduser=?";
+        try {
+            
+            pst = connection.prepareStatement(sql);
+            pst.setString(1, txtUserId.getText());
+            rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                txtUserName.setText(rs.getString(2));
+                txtUserFone.setText(rs.getString(3));
+                txtUserLog.setText(rs.getString(4));
+                txtUserPass.setText(rs.getString(5));
+                // the line bellow refer to combobox
+                cboUserProfile.setSelectedItem(rs.getString(6));
+
+            } else {
+                
+                JOptionPane.showMessageDialog(null, "Usuario não cadastrado");
+                //the lines below "clean" the rows
+                
+                txtUserName.setText(null);
+                txtUserFone.setText(null);
+                txtUserLog.setText(null);
+                txtUserPass.setText(null);
+                cboUserProfile.setSelectedItem(null);
+
+            }
+           
+        } catch (Exception e) {
+            JOptionPane.showInternalMessageDialog(null, e);
+        }
+    
+    
+    }
+    
+    private void add() {
+    
+  String sql = "insert into tbusers(iduser, name_user, fone, login, pass_word, profile_user) values(?, ?, ?, ?, ?, ?)";
+        try {
+             pst = connection.prepareStatement(sql);
+             
+             pst.setString(1, txtUserId.getText());
+             pst.setString(2, txtUserName.getText());
+             pst.setString(3, txtUserFone.getText());
+             pst.setString(4, txtUserLog.getText());
+             pst.setString(5, txtUserPass.getText());
+             pst.setString(6, cboUserProfile.getSelectedItem().toString());
+             
+             pst.executeUpdate();
+             
+             JOptionPane.showMessageDialog(null, "registered user");
+             
+                txtUserId.setText(null);
+                txtUserName.setText(null);
+                txtUserFone.setText(null);
+                txtUserLog.setText(null);
+                txtUserPass.setText(null);
+                cboUserProfile.setSelectedItem(null);
+             
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+    
     }
 
     /** This method is called from within the constructor to
@@ -34,13 +113,13 @@ public class UserScreen extends javax.swing.JInternalFrame {
         txtUserName = new javax.swing.JTextField();
         txtUserLog = new javax.swing.JTextField();
         txtUserFone = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboUserProfile = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         txtUserPass = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnUserCreate = new javax.swing.JButton();
+        btnUserRead = new javax.swing.JButton();
+        btnUserUpdate = new javax.swing.JButton();
+        btnUserDelete = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -65,32 +144,42 @@ public class UserScreen extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "user" }));
+        cboUserProfile.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "admin", "user" }));
 
         jLabel6.setText("Fone");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/add.png"))); // NOI18N
-        jButton1.setToolTipText("Add");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setPreferredSize(new java.awt.Dimension(64, 64));
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/search.png"))); // NOI18N
-        jButton2.setToolTipText("Search");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.N_RESIZE_CURSOR));
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/update.png"))); // NOI18N
-        jButton3.setToolTipText("Update");
-        jButton3.setContentAreaFilled(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.N_RESIZE_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnUserCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/add.png"))); // NOI18N
+        btnUserCreate.setToolTipText("Add");
+        btnUserCreate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUserCreate.setPreferredSize(new java.awt.Dimension(64, 64));
+        btnUserCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnUserCreateActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/remove.png"))); // NOI18N
-        jButton4.setToolTipText("Delete");
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.N_RESIZE_CURSOR));
+        btnUserRead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/search.png"))); // NOI18N
+        btnUserRead.setToolTipText("Search");
+        btnUserRead.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUserRead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserReadActionPerformed(evt);
+            }
+        });
+
+        btnUserUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/update.png"))); // NOI18N
+        btnUserUpdate.setToolTipText("Update");
+        btnUserUpdate.setContentAreaFilled(false);
+        btnUserUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUserUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserUpdateActionPerformed(evt);
+            }
+        });
+
+        btnUserDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/remove.png"))); // NOI18N
+        btnUserDelete.setToolTipText("Delete");
+        btnUserDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,19 +205,19 @@ public class UserScreen extends javax.swing.JInternalFrame {
                                 .addGap(79, 79, 79)
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cboUserProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUserCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(57, 57, 57)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                .addComponent(btnUserRead, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                                 .addGap(64, 64, 64)
-                                .addComponent(jButton4)
+                                .addComponent(btnUserDelete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnUserUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
@@ -140,7 +229,7 @@ public class UserScreen extends javax.swing.JInternalFrame {
                         .addGap(31, 31, 31))))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnUserCreate, btnUserDelete, btnUserRead, btnUserUpdate});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,23 +247,23 @@ public class UserScreen extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtUserLog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboUserProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtUserPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txtUserFone, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUserFone, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(btnUserCreate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUserDelete)
+                    .addComponent(btnUserUpdate)
+                    .addComponent(btnUserRead))
                 .addGap(107, 107, 107))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnUserCreate, btnUserDelete, btnUserRead, btnUserUpdate});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -183,17 +272,26 @@ public class UserScreen extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserLogActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnUserUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserUpdateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnUserUpdateActionPerformed
+
+    private void btnUserReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserReadActionPerformed
+        // call the search method
+        search();
+    }//GEN-LAST:event_btnUserReadActionPerformed
+
+    private void btnUserCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserCreateActionPerformed
+       add();
+    }//GEN-LAST:event_btnUserCreateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnUserCreate;
+    private javax.swing.JButton btnUserDelete;
+    private javax.swing.JButton btnUserRead;
+    private javax.swing.JButton btnUserUpdate;
+    private javax.swing.JComboBox<String> cboUserProfile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
