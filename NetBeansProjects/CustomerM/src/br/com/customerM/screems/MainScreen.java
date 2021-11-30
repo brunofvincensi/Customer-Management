@@ -213,7 +213,9 @@ public class MainScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menRegOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRegOsActionPerformed
-        // TODO add your handling code here:
+        OSScreen os = new OSScreen();
+        os.setVisible(true);
+        desktop.add(os);
     }//GEN-LAST:event_menRegOsActionPerformed
 
     private void menRepSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRepSerActionPerformed

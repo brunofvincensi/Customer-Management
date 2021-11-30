@@ -7,6 +7,7 @@ package br.com.customerM.screems;
 import java.sql.*;
 import br.com.customerM.dal.ConnectionModule;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 // the line below import the resources of rs2xml.jar library
 import net.proteanit.sql.DbUtils;
 
@@ -19,7 +20,7 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
     Connection connection = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    
+
     /**
      * Creates new form CustomerScreen
      */
@@ -27,169 +28,157 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
         initComponents();
         connection = ConnectionModule.conector();
     }
-    
-    private void add() {
-    
-  String sql = "insert into tbcustomer(namecust, address, fone, email) values(?, ?, ?, ?)";
-        try {
-             pst = connection.prepareStatement(sql);
-             
-             pst.setString(1, txtCustName.getText());
-             pst.setString(2, txtCustAddress.getText());
-             pst.setString(3, txtCustFone.getText());
-             pst.setString(4, txtCustEmail.getText());
-             
-             
-             
-             if (txtCustName.getText().isEmpty() || txtCustFone.getText().isEmpty()) {
-                 
-                JOptionPane.showMessageDialog(null, "fill all fields");
-                
-            } else {
-            
-             
-             
-             int added = pst.executeUpdate();
-             System.out.println(added);
-             
-             if(added > 0){
-             JOptionPane.showMessageDialog(null, "registered customer with success");
 
-             }
-             
-                txtCustName.setText(null);
-                txtCustAddress.setText(null);
-                txtCustFone.setText(null);
-                txtCustEmail.setText(null);
-                
-             
-        } }
-        catch (Exception e) {
+    private void add() {
+
+        String sql = "insert into tbcustomer(namecust, address, fone, email) values(?, ?, ?, ?)";
+        try {
+            pst = connection.prepareStatement(sql);
+
+            pst.setString(1, txtCustName.getText());
+            pst.setString(2, txtCustAddress.getText());
+            pst.setString(3, txtCustFone.getText());
+            pst.setString(4, txtCustEmail.getText());
+
+            if (txtCustName.getText().isEmpty() || txtCustFone.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(null, "fill all fields");
+
+            } else {
+
+                int added = pst.executeUpdate();
+                System.out.println(added);
+
+                if (added > 0) {
+                    JOptionPane.showMessageDialog(null, "registered customer with success");
+
+                }
+
+                clean();
+
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-    
-    
+
     }
-    
+
     //advanced search, im real time
-    private void search_customer(){
-    
-    String sql = "select*from tbcustomer where namecust like ?";
+    private void search_customer() {
+
+        String sql = "select idcust as id, namecust as name, address, fone, email "
+                + "from tbcustomer where namecust like ?";
         try {
             pst = connection.prepareStatement(sql);
             //giving the content from the search box to the ?
             // pay attantion for "%" - String sql sequel
-            
+
             pst.setString(1, txtCustSearch.getText() + "%");
             rs = pst.executeQuery();
-            
+
             // the line below use the library rs2xml.jar to fill the table
-            
             tblCustomers.setModel(DbUtils.resultSetToTableModel(rs));
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-    
-    
-    }
-    
-    // method to set the fields with the table content
-    
-    public void set_fields(){
-        
-    int set = tblCustomers.getSelectedRow();
-    txtCustId.setText(tblCustomers.getModel().getValueAt(set, 0).toString());
-    txtCustName.setText(tblCustomers.getModel().getValueAt(set, 1).toString());
-    txtCustAddress.setText(tblCustomers.getModel().getValueAt(set, 2).toString());
-    txtCustFone.setText(tblCustomers.getModel().getValueAt(set, 3).toString());
-    txtCustEmail.setText(tblCustomers.getModel().getValueAt(set, 4).toString());
 
-    // the line below turn off the add button
-    btnAdd.setEnabled(false);
-    
-    
     }
-    
-    private void change(){
-    
-    String sql = "update tbcustomer set namecust=?, address=?, fone=?, email=? "
-            + "where idcust=?";
-    
-    
+
+    // method to set the fields with the table content
+    public void set_fields() {
+
+        int set = tblCustomers.getSelectedRow();
+        txtCustId.setText(tblCustomers.getModel().getValueAt(set, 0).toString());
+        txtCustName.setText(tblCustomers.getModel().getValueAt(set, 1).toString());
+        txtCustAddress.setText(tblCustomers.getModel().getValueAt(set, 2).toString());
+        txtCustFone.setText(tblCustomers.getModel().getValueAt(set, 3).toString());
+        txtCustEmail.setText(tblCustomers.getModel().getValueAt(set, 4).toString());
+
+        // the line below turn off the add button
+        btnAdd.setEnabled(false);
+
+    }
+
+    private void change() {
+
+        String sql = "update tbcustomer set namecust=?, address=?, fone=?, email=? "
+                + "where idcust=?";
+
         try {
             pst = connection.prepareStatement(sql);
-            
-             pst.setString(1, txtCustName.getText());
-             pst.setString(2, txtCustAddress.getText());
-             pst.setString(3, txtCustFone.getText());
-             pst.setString(4, txtCustEmail.getText());
-             pst.setString(5, txtCustId.getText());
-          
-             
-             if (txtCustName.getText().isEmpty() || txtCustFone.getText().isEmpty()) {
-                 
-                JOptionPane.showMessageDialog(null, "fill all fields");
-                
-            } else{
-                 
-                 
-             int change = pst.executeUpdate();
-             System.out.println(change);
-             
-             if(change > 0){
-             JOptionPane.showMessageDialog(null, "changed customer with success");
 
-             }
-             
-                txtCustName.setText(null);
-                txtCustAddress.setText(null);
-                txtCustFone.setText(null);
-                txtCustEmail.setText(null);
+            pst.setString(1, txtCustName.getText());
+            pst.setString(2, txtCustAddress.getText());
+            pst.setString(3, txtCustFone.getText());
+            pst.setString(4, txtCustEmail.getText());
+            pst.setString(5, txtCustId.getText());
+
+            if (txtCustName.getText().isEmpty() || txtCustFone.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(null, "fill all fields");
+
+            } else {
+
+                int change = pst.executeUpdate();
+                System.out.println(change);
+
+                if (change > 0) {
+                    JOptionPane.showMessageDialog(null, "changed customer with success");
+
+                }
+
+                clean();
                 btnAdd.setEnabled(true);
-            
-             
-             }
-             
-             
-            
+
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
-    private void delete(){
-    
+
+    private void delete() {
+
         int confirm = JOptionPane.showConfirmDialog(null, "Are you shure to exit?", "Attention", JOptionPane.YES_NO_OPTION);
-        
-        if (confirm == JOptionPane.YES_OPTION){
+
+        if (confirm == JOptionPane.YES_OPTION) {
             String sql = "delete from tbcustomer where idcust=?";
-            
+
             try {
                 pst = connection.prepareStatement(sql);
-                
+
                 pst.setString(1, txtCustId.getText());
-               int deleted = pst.executeUpdate();
-               
-               if (deleted > 0){
-               
-               JOptionPane.showMessageDialog(null, "User removed with success");
-               
-                txtCustName.setText(null);
-                txtCustAddress.setText(null);
-                txtCustFone.setText(null);
-                txtCustEmail.setText(null);
-                btnAdd.setEnabled(true);
-                
-               
-               }
-  
+                int deleted = pst.executeUpdate();
+
+                if (deleted > 0) {
+
+                    JOptionPane.showMessageDialog(null, "User removed with success");
+
+                    clean();
+                    btnAdd.setEnabled(true);
+
+                }
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-        
+
         }
     }
+
+    //method to clean the form fields
+    private void clean() {
+        txtCustSearch.setText(null);
+        txtCustId.setText(null);
+        txtCustName.setText(null);
+        txtCustAddress.setText(null);
+        txtCustFone.setText(null);
+        txtCustEmail.setText(null);
+        ((DefaultTableModel) tblCustomers.getModel()).setRowCount(0);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -288,17 +277,24 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/magnifier.png"))); // NOI18N
 
+        tblCustomers = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
         tblCustomers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "name", "address", "fone", "email"
             }
         ));
+        tblCustomers.setFocusable(false);
+        tblCustomers.getTableHeader().setReorderingAllowed(false);
         tblCustomers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCustomersMouseClicked(evt);
@@ -374,9 +370,9 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtCustSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))))
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txtCustId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -417,7 +413,7 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // call the add method
-       add();
+        add();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -436,7 +432,7 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
 
     //the method below is "wile typing"
     private void txtCustSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustSearchKeyReleased
-        
+
         search_customer();
     }//GEN-LAST:event_txtCustSearchKeyReleased
 
