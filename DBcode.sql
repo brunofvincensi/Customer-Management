@@ -13,7 +13,7 @@ login varchar(15) not null unique,
 pass_word varchar(15) not null
 );
 
-desc tbusuarios;
+desc tbusers;
 
 -- CRUD system
 

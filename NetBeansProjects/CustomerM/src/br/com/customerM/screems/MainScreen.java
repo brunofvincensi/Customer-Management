@@ -106,6 +106,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         menRegCli.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
         menRegCli.setText("Client");
+        menRegCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menRegCliActionPerformed(evt);
+            }
+        });
         menReg.add(menRegCli);
 
         menRegOs.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_DOWN_MASK));
@@ -246,6 +251,14 @@ public class MainScreen extends javax.swing.JFrame {
         user.setVisible(true);
         desktop.add(user);
     }//GEN-LAST:event_menRegUseActionPerformed
+
+    private void menRegCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRegCliActionPerformed
+        // call the Customer Screen
+        CustomerScreen cs = new CustomerScreen();
+        cs.setVisible(true);
+        desktop.add(cs);
+        
+    }//GEN-LAST:event_menRegCliActionPerformed
 
     /**
      * @param args the command line arguments
