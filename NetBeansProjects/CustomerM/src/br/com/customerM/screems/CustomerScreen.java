@@ -7,6 +7,8 @@ package br.com.customerM.screems;
 import java.sql.*;
 import br.com.customerM.dal.ConnectionModule;
 import javax.swing.JOptionPane;
+// the line below import the resources of rs2xml.jar library
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -68,7 +70,126 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
     
     
     }
+    
+    //advanced search, im real time
+    private void search_customer(){
+    
+    String sql = "select*from tbcustomer where namecust like ?";
+        try {
+            pst = connection.prepareStatement(sql);
+            //giving the content from the search box to the ?
+            // pay attantion for "%" - String sql sequel
+            
+            pst.setString(1, txtCustSearch.getText() + "%");
+            rs = pst.executeQuery();
+            
+            // the line below use the library rs2xml.jar to fill the table
+            
+            tblCustomers.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+    
+    }
+    
+    // method to set the fields with the table content
+    
+    public void set_fields(){
+        
+    int set = tblCustomers.getSelectedRow();
+    txtCustId.setText(tblCustomers.getModel().getValueAt(set, 0).toString());
+    txtCustName.setText(tblCustomers.getModel().getValueAt(set, 1).toString());
+    txtCustAddress.setText(tblCustomers.getModel().getValueAt(set, 2).toString());
+    txtCustFone.setText(tblCustomers.getModel().getValueAt(set, 3).toString());
+    txtCustEmail.setText(tblCustomers.getModel().getValueAt(set, 4).toString());
 
+    // the line below turn off the add button
+    btnAdd.setEnabled(false);
+    
+    
+    }
+    
+    private void change(){
+    
+    String sql = "update tbcustomer set namecust=?, address=?, fone=?, email=? "
+            + "where idcust=?";
+    
+    
+        try {
+            pst = connection.prepareStatement(sql);
+            
+             pst.setString(1, txtCustName.getText());
+             pst.setString(2, txtCustAddress.getText());
+             pst.setString(3, txtCustFone.getText());
+             pst.setString(4, txtCustEmail.getText());
+             pst.setString(5, txtCustId.getText());
+          
+             
+             if (txtCustName.getText().isEmpty() || txtCustFone.getText().isEmpty()) {
+                 
+                JOptionPane.showMessageDialog(null, "fill all fields");
+                
+            } else{
+                 
+                 
+             int change = pst.executeUpdate();
+             System.out.println(change);
+             
+             if(change > 0){
+             JOptionPane.showMessageDialog(null, "changed customer with success");
+
+             }
+             
+                txtCustName.setText(null);
+                txtCustAddress.setText(null);
+                txtCustFone.setText(null);
+                txtCustEmail.setText(null);
+                btnAdd.setEnabled(true);
+            
+             
+             }
+             
+             
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    private void delete(){
+    
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you shure to exit?", "Attention", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION){
+            String sql = "delete from tbcustomer where idcust=?";
+            
+            try {
+                pst = connection.prepareStatement(sql);
+                
+                pst.setString(1, txtCustId.getText());
+               int deleted = pst.executeUpdate();
+               
+               if (deleted > 0){
+               
+               JOptionPane.showMessageDialog(null, "User removed with success");
+               
+                txtCustName.setText(null);
+                txtCustAddress.setText(null);
+                txtCustFone.setText(null);
+                txtCustEmail.setText(null);
+                btnAdd.setEnabled(true);
+                
+               
+               }
+  
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,6 +215,8 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCustomers = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        txtCustId = new javax.swing.JTextField();
 
         setBorder(new javax.swing.border.MatteBorder(null));
         setClosable(true);
@@ -157,6 +280,11 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
                 txtCustSearchActionPerformed(evt);
             }
         });
+        txtCustSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCustSearchKeyReleased(evt);
+            }
+        });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/magnifier.png"))); // NOI18N
 
@@ -171,15 +299,44 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblCustomers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCustomersMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblCustomers);
+
+        jLabel7.setText("Id Customer");
+
+        txtCustId.setEnabled(false);
+        txtCustId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCustIdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtCustSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)))
+                .addGap(63, 63, 63))
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCustId, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -204,17 +361,6 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
                                 .addComponent(btnChange, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtCustEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtCustSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5)))
-                .addGap(63, 63, 63))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,7 +376,11 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6))))
                 .addGap(7, 7, 7)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtCustId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtCustName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -251,7 +401,7 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
                     .addComponent(btnChange, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRemove, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+                .addContainerGap())
         );
 
         pack();
@@ -272,17 +422,31 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         // call the delete method
-        //delete();
+        delete();
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeActionPerformed
         // call the change method
-       // change();
+        change();
     }//GEN-LAST:event_btnChangeActionPerformed
 
     private void txtCustSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCustSearchActionPerformed
+
+    //the method below is "wile typing"
+    private void txtCustSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCustSearchKeyReleased
+        
+        search_customer();
+    }//GEN-LAST:event_txtCustSearchKeyReleased
+
+    private void tblCustomersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomersMouseClicked
+        set_fields();
+    }//GEN-LAST:event_tblCustomersMouseClicked
+
+    private void txtCustIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCustIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCustIdActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -295,11 +459,13 @@ public class CustomerScreen extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblCustomers;
     private javax.swing.JTextField txtCustAddress;
     private javax.swing.JTextField txtCustEmail;
     private javax.swing.JTextField txtCustFone;
+    private javax.swing.JTextField txtCustId;
     private javax.swing.JTextField txtCustName;
     private javax.swing.JTextField txtCustSearch;
     // End of variables declaration//GEN-END:variables
