@@ -78,3 +78,14 @@ C.namecust, fone
 from tbos as O
 inner join tbcustomer as C
 on (O.idcust = C.idcust);
+
+-----------------------------------------------
+
+desc tbcustomer;
+
+select * from tbcustomer;
+
+
+select idcust as id, namecust as name, address, fone, email from tbcustomer;
+
+desc tbos;
