@@ -75,8 +75,121 @@ public class OSScreen extends javax.swing.JInternalFrame {
             pst.setString(4, txtOsDef.getText());
             pst.setString(5, txtOsServ.getText());
             pst.setString(6, txtOsTech.getText());
-            pst.setString(7, txtOsValue.getText());
+            pst.setString(7, txtOsValue.getText().replace(",", "."));
             pst.setString(8, txtCustId.getText());
+                  
+            if (txtOsEquip.getText().isEmpty() || txtOsDef.getText().isEmpty()
+                    || txtCustId.getText().isEmpty()) {
+                
+                JOptionPane.showMessageDialog(null, "fill all the fields");
+                
+            } else {
+                
+                int add = pst.executeUpdate();
+                if(add>0){
+                    
+                 JOptionPane.showMessageDialog(null, "OS changed with success");
+                 
+                 txtCustId.setText(null);
+                 txtOsEquip.setText(null);
+                 txtOsDef.setText(null);
+                 txtOsServ.setText(null);
+                 txtOsTech.setText(null);
+                 txtOsValue.setText(null);
+                 txtOs.setText(null);
+                 txtDate.setText(null);
+                 
+                 // enable the objects
+                 
+                 btnOsCreate.setEnabled(true);
+                 txtCustSearch.setEnabled(true);
+                 tblCust.setVisible(true);
+                 
+                
+                }
+            }
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+    
+    
+    }
+    
+    // method to search a os
+    
+    private void search_os(){
+    
+        String os_num = JOptionPane.showInputDialog("Os Number");
+        String sql = "select * from tbos where os= " + os_num;
+    
+        
+        try {
+            
+            pst = connection.prepareStatement(sql);
+            rs=pst.executeQuery();
+            if (rs.next()) {
+                
+                txtOs.setText(rs.getString(1));
+                txtDate.setText(rs.getString(2));
+                                              
+                if(rs.getString(3).equals("Budget")){
+                rbtBud.setSelected(true);
+                type = "Budget";
+                
+                }else{
+                rbtOs.setSelected(true);
+                type = "OS";
+                }
+                
+                cboOsSit.setSelectedItem(rs.getString(4));
+                txtOsEquip.setText(rs.getString(5));
+                txtOsDef.setText(rs.getString(6));
+                txtOsServ.setText(rs.getString(7));
+                txtOsTech.setText(rs.getString(8));
+                txtOsValue.setText(rs.getString(9));
+                txtCustId.setText(rs.getString(10));
+                
+                // avoid problems               
+               btnOsCreate.setEnabled(false);              
+               txtCustSearch.setEnabled(false);
+               tblCust.setVisible(false);
+                
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Os don't registered");
+            }
+            
+        } catch (java.sql.SQLSyntaxErrorException e) {
+            JOptionPane.showMessageDialog(null, "OS invalid");
+            //System.out.println(e);
+        } catch (Exception e2){
+        
+            JOptionPane.showMessageDialog(null, e2);
+        }
+    
+    
+    
+    
+    }
+    
+    private void change_os(){
+    
+    String sql = "update tbos set type_os=?, situacion=?, equipment=?, defect=?, service=?, technician=?,"
+            + "amount=? where os=?";
+    
+    try {
+            pst = connection.prepareStatement(sql);
+            pst.setString(1, type);
+            pst.setString(2, cboOsSit.getSelectedItem().toString());
+            pst.setString(3, txtOsEquip.getText());
+            pst.setString(4, txtOsDef.getText());
+            pst.setString(5, txtOsServ.getText());
+            pst.setString(6, txtOsTech.getText());
+            pst.setString(7, txtOsValue.getText().replace(",", "."));
+            pst.setString(8, txtOs.getText());
                   
             if (txtOsEquip.getText().isEmpty() || txtOsDef.getText().isEmpty()
                     || txtCustId.getText().isEmpty()) {
@@ -96,6 +209,12 @@ public class OSScreen extends javax.swing.JInternalFrame {
                  txtOsServ.setText(null);
                  txtOsTech.setText(null);
                  txtOsValue.setText(null);
+                 
+                  // enable the objects
+                 
+                 btnOsCreate.setEnabled(true);
+                 txtCustSearch.setEnabled(true);
+                 tblCust.setVisible(true);
                 
                 }
             }
@@ -104,6 +223,10 @@ public class OSScreen extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
+    
+    
+    
+    
     
     
     
@@ -189,6 +312,7 @@ public class OSScreen extends javax.swing.JInternalFrame {
         jLabel1.setText("Date");
 
         txtDate.setEditable(false);
+        txtDate.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         txtDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDateActionPerformed(evt);
@@ -239,9 +363,7 @@ public class OSScreen extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtDate)
-                                .addContainerGap())))))
+                            .addComponent(txtDate)))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,11 +524,21 @@ public class OSScreen extends javax.swing.JInternalFrame {
         btnOsRead.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/search.png"))); // NOI18N
         btnOsRead.setToolTipText("Search");
         btnOsRead.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOsRead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOsReadActionPerformed(evt);
+            }
+        });
 
         btnOsUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/update.png"))); // NOI18N
         btnOsUpdate.setToolTipText("Update");
         btnOsUpdate.setContentAreaFilled(false);
         btnOsUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOsUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOsUpdateActionPerformed(evt);
+            }
+        });
 
         btnOsDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/remove.png"))); // NOI18N
         btnOsDelete.setToolTipText("Delete");
@@ -584,10 +716,20 @@ public class OSScreen extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btnOsCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsCreateActionPerformed
-        // call the methor issue_os
+        // call the method issue_os
         issue_os();
         
     }//GEN-LAST:event_btnOsCreateActionPerformed
+
+    private void btnOsReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsReadActionPerformed
+        // TODO add your handling code here:
+        search_os();
+    }//GEN-LAST:event_btnOsReadActionPerformed
+
+    private void btnOsUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsUpdateActionPerformed
+        // call the change_os metho
+        change_os();
+    }//GEN-LAST:event_btnOsUpdateActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
