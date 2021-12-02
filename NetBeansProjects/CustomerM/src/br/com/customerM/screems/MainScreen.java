@@ -90,11 +90,11 @@ public class MainScreen extends javax.swing.JFrame {
         desktop.setLayout(desktopLayout);
         desktopLayout.setHorizontalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+            .addGap(0, 555, Short.MAX_VALUE)
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 487, Short.MAX_VALUE)
+            .addGap(0, 505, Short.MAX_VALUE)
         );
 
         menReg.setText("Registration");
@@ -191,9 +191,8 @@ public class MainScreen extends javax.swing.JFrame {
                         .addGap(79, 79, 79))))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(desktop)
-                    .addContainerGap(231, Short.MAX_VALUE)))
+                    .addComponent(desktop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 246, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,14 +201,12 @@ public class MainScreen extends javax.swing.JFrame {
                 .addComponent(lblUser)
                 .addGap(18, 18, 18)
                 .addComponent(lblDate)
-                .addContainerGap(373, Short.MAX_VALUE))
+                .addContainerGap(380, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(desktop)
-                    .addContainerGap()))
+                .addComponent(desktop))
         );
 
-        setBounds(0, 0, 817, 559);
+        setBounds(0, 0, 817, 566);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menRegOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRegOsActionPerformed
@@ -220,6 +217,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void menRepSerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menRepSerActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_menRepSerActionPerformed
 
     private void menOptExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menOptExitActionPerformed

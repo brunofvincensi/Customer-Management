@@ -8,7 +8,9 @@
       </Border>
     </Property>
     <Property name="closable" type="boolean" value="true"/>
+    <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
+    <Property name="resizable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Customers"/>
     <Property name="toolTipText" type="java.lang.String" value=""/>
   </Properties>
@@ -33,7 +35,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jScrollPane1" alignment="0" pref="464" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="480" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="txtCustSearch" min="-2" pref="260" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -59,7 +61,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="txtCustFone" min="-2" pref="167" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -70,19 +72,19 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="btnAdd" min="-2" pref="77" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                               <Component id="btnRemove" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnChange" min="-2" pref="79" max="-2" attributes="0"/>
                           </Group>
                           <Component id="txtCustEmail" min="-2" pref="337" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="150" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -102,9 +104,9 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="89" max="-2" attributes="0"/>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtCustId" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -133,7 +135,7 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnChange" max="32767" attributes="0"/>
                   <Component id="btnRemove" max="32767" attributes="0"/>
-                  <Component id="btnAdd" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnAdd" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -214,7 +216,7 @@
     <Component class="javax.swing.JButton" name="btnChange">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/br/com/customerM/icons/update.png"/>
+          <Image iconType="3" name="/br/com/customerM/icons/REDO.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Update"/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
@@ -264,6 +266,7 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblCustomersMouseClicked"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tblCustomersKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tblCustomers = new javax.swing.JTable(){&#xa;        public boolean isCellEditable(int rowIndex, int colIndex){&#xa;        return false;&#xa;        }&#xa;        };"/>
