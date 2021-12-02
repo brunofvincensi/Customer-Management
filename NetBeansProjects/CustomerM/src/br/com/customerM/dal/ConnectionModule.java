@@ -19,9 +19,9 @@ public class ConnectionModule {
        String driver = "com.mysql.jdbc.Driver";
        
        // storing information regarding the bank
-       String url = "jdbc:mysql://localhost:3306/dbmanagement";
-       String user = "root";
-       String password = "bruno2004117";
+       String url = "jdbc:mysql://localhost:3306/dbmanagement?characterEncoding=utf-8";
+       String user = "dba";
+       String password = "12345";
        
        // Establishing the connection with the base
         try {

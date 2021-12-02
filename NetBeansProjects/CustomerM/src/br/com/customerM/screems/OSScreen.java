@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package br.com.customerM.screems;
+
 import java.sql.*;
 import br.com.customerM.dal.ConnectionModule;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -13,15 +15,13 @@ import net.proteanit.sql.DbUtils;
  * @author f0fp1241
  */
 public class OSScreen extends javax.swing.JInternalFrame {
-    
+
     Connection connection = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    
-    
+
     // the line below create a variable to store a text according to the radion button 
     // selected
-    
     private String type;
 
     /**
@@ -31,42 +31,37 @@ public class OSScreen extends javax.swing.JInternalFrame {
         initComponents();
         connection = ConnectionModule.conector();
     }
-    
-    private void search_customer(){
-    String sql = "select idcust as id, namecust as name, fone "
+
+    private void search_customer() {
+        String sql = "select idcust as id, namecust as name, fone "
                 + "from tbcustomer where namecust like ?";
-    
+
         try {
             pst = connection.prepareStatement(sql);
             pst.setString(1, txtCustSearch.getText() + "%");
             rs = pst.executeQuery();
             tblCust.setModel(DbUtils.resultSetToTableModel(rs));
-     
-            
-            
+
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(null, e);
         }
-    
-    
-    
+
     }
-    
-    private void set_fields(){
-    
-    int set = tblCust.getSelectedRow();
-    
-    txtCustId.setText(tblCust.getModel().getValueAt(set, 0).toString());
-    
-    
+
+    private void set_fields() {
+
+        int set = tblCust.getSelectedRow();
+
+        txtCustId.setText(tblCust.getModel().getValueAt(set, 0).toString());
+
     }
-    
-    private void issue_os(){
-    
-    String sql = "insert into tbos(type_os, situacion, equipment, defect, service,"
-            + "technician, amount, idcust) values(?,?,?,?,?,?,?,?)";
-    
+
+    private void issue_os() {
+
+        String sql = "insert into tbos(type_os, situacion, equipment, defect, service,"
+                + "technician, amount, idcust) values(?,?,?,?,?,?,?,?)";
+
         try {
             pst = connection.prepareStatement(sql);
             pst.setString(1, type);
@@ -77,73 +72,58 @@ public class OSScreen extends javax.swing.JInternalFrame {
             pst.setString(6, txtOsTech.getText());
             pst.setString(7, txtOsValue.getText().replace(",", "."));
             pst.setString(8, txtCustId.getText());
-                  
+
             if (txtOsEquip.getText().isEmpty() || txtOsDef.getText().isEmpty()
-                    || txtCustId.getText().isEmpty()) {
-                
+                    || txtCustId.getText().isEmpty() || cboOsSit.getSelectedItem().equals(" ")) {
+
                 JOptionPane.showMessageDialog(null, "fill all the fields");
-                
+
             } else {
-                
+
                 int add = pst.executeUpdate();
-                if(add>0){
+                if (add > 0) {
+
+                    JOptionPane.showMessageDialog(null, "OS issued with success");
                     
-                 JOptionPane.showMessageDialog(null, "OS changed with success");
-                 
-                 txtCustId.setText(null);
-                 txtOsEquip.setText(null);
-                 txtOsDef.setText(null);
-                 txtOsServ.setText(null);
-                 txtOsTech.setText(null);
-                 txtOsValue.setText(null);
-                 txtOs.setText(null);
-                 txtDate.setText(null);
-                 
-                 // enable the objects
-                 
-                 btnOsCreate.setEnabled(true);
-                 txtCustSearch.setEnabled(true);
-                 tblCust.setVisible(true);
-                 
-                
+                    
+
+                   btnOsCreate.setEnabled(false);
+                   btnOsRead.setEnabled(false);
+                   btnOsPrint.setEnabled(true);
+
                 }
             }
-            
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-    
-    
-    
+
     }
-    
+
     // method to search a os
-    
-    private void search_os(){
-    
+    private void search_os() {
+
         String os_num = JOptionPane.showInputDialog("Os Number");
         String sql = "select * from tbos where os= " + os_num;
-    
-        
+
         try {
-            
+
             pst = connection.prepareStatement(sql);
-            rs=pst.executeQuery();
+            rs = pst.executeQuery();
             if (rs.next()) {
-                
+
                 txtOs.setText(rs.getString(1));
                 txtDate.setText(rs.getString(2));
-                                              
-                if(rs.getString(3).equals("Budget")){
-                rbtBud.setSelected(true);
-                type = "Budget";
-                
-                }else{
-                rbtOs.setSelected(true);
-                type = "OS";
+
+                if (rs.getString(3).equals("Budget")) {
+                    rbtBud.setSelected(true);
+                    type = "Budget";
+
+                } else {
+                    rbtOs.setSelected(true);
+                    type = "OS";
                 }
-                
+
                 cboOsSit.setSelectedItem(rs.getString(4));
                 txtOsEquip.setText(rs.getString(5));
                 txtOsDef.setText(rs.getString(6));
@@ -151,36 +131,39 @@ public class OSScreen extends javax.swing.JInternalFrame {
                 txtOsTech.setText(rs.getString(8));
                 txtOsValue.setText(rs.getString(9));
                 txtCustId.setText(rs.getString(10));
-                
+
                 // avoid problems               
-               btnOsCreate.setEnabled(false);              
-               txtCustSearch.setEnabled(false);
-               tblCust.setVisible(false);
+                btnOsCreate.setEnabled(false);
+                txtCustSearch.setEnabled(false);
+                tblCust.setVisible(false);
                 
-                
+                // active others buttons
+                btnOsDelete.setEnabled(true);
+                btnOsPrint.setEnabled(true);
+                btnOsUpdate.setEnabled(true);
+
+
             } else {
                 JOptionPane.showMessageDialog(null, "Os don't registered");
             }
-            
+
         } catch (java.sql.SQLSyntaxErrorException e) {
             JOptionPane.showMessageDialog(null, "OS invalid");
             //System.out.println(e);
-        } catch (Exception e2){
-        
+        } catch (Exception e2) {
+
             JOptionPane.showMessageDialog(null, e2);
         }
-    
-    
-    
-    
+
     }
-    
-    private void change_os(){
-    
-    String sql = "update tbos set type_os=?, situacion=?, equipment=?, defect=?, service=?, technician=?,"
-            + "amount=? where os=?";
-    
-    try {
+
+    //method to change an os
+    private void change_os() {
+
+        String sql = "update tbos set type_os=?, situacion=?, equipment=?, defect=?, service=?, technician=?,"
+                + "amount=? where os=?";
+
+        try {
             pst = connection.prepareStatement(sql);
             pst.setString(1, type);
             pst.setString(2, cboOsSit.getSelectedItem().toString());
@@ -190,45 +173,88 @@ public class OSScreen extends javax.swing.JInternalFrame {
             pst.setString(6, txtOsTech.getText());
             pst.setString(7, txtOsValue.getText().replace(",", "."));
             pst.setString(8, txtOs.getText());
-                  
+
             if (txtOsEquip.getText().isEmpty() || txtOsDef.getText().isEmpty()
-                    || txtCustId.getText().isEmpty()) {
-                
+                    || txtCustId.getText().isEmpty() || cboOsSit.getSelectedItem().equals(" ")) {
+
                 JOptionPane.showMessageDialog(null, "fill all the fields");
-                
+
             } else {
-                
+
                 int add = pst.executeUpdate();
-                if(add>0){
-                    
-                 JOptionPane.showMessageDialog(null, "OS issued with success");
-                 
-                 txtCustId.setText(null);
-                 txtOsEquip.setText(null);
-                 txtOsDef.setText(null);
-                 txtOsServ.setText(null);
-                 txtOsTech.setText(null);
-                 txtOsValue.setText(null);
-                 
-                  // enable the objects
-                 
-                 btnOsCreate.setEnabled(true);
-                 txtCustSearch.setEnabled(true);
-                 tblCust.setVisible(true);
-                
+                if (add > 0) {
+
+                    JOptionPane.showMessageDialog(null, "OS changed with success");
+
+                    clean();
+
                 }
             }
-            
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
+
+    }
     
     
+
+    //method to delete an os
+    private void delete_os() {
+
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you shure that tou want to delete this OS?",
+                "Attation", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+
+            String sql = "delete from tbos where os=?";
+
+            try {
+
+                pst = connection.prepareStatement(sql);
+                pst.setString(1, txtOs.getText());
+
+                int deleted = pst.executeUpdate();
+                if (deleted > 0) {
+                    JOptionPane.showMessageDialog(null, "deleted with success");
+
+                   clean();
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+
+        }
+
+    }
+    // clean fields and enable the buttons
+    private void clean(){
     
-    
-    
-    
+     txtOs.setText(null);
+     
+                    txtDate.setText(null);
+                    txtCustId.setText(null);
+                    txtOsEquip.setText(null);
+                    txtOsDef.setText(null);
+                    txtOsServ.setText(null);
+                    txtOsTech.setText(null);
+                    txtOsValue.setText(null);
+                    txtCustSearch.setText(null);
+                    ((DefaultTableModel) tblCust.getModel()).setRowCount(0);
+                    cboOsSit.setSelectedItem(" ");
+
+                    // enable the objects
+                    btnOsCreate.setEnabled(true);
+                    txtCustSearch.setEnabled(true);
+                    tblCust.setVisible(true);
+                    btnOsRead.setEnabled(true);
+                    
+                    // denable the objects
+                    btnOsUpdate.setEnabled(false);
+                    btnOsDelete.setEnabled(false);
+                    btnOsPrint.setEnabled(false);
+   
     
     }
 
@@ -385,7 +411,7 @@ public class OSScreen extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Situacion");
 
-        cboOsSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "On the table", "Delivery OK", "Budget REPROVED", "Waiting for Aproval", "Waiting parts", "Abandoned by customer", "Returned" }));
+        cboOsSit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "On the table", "Delivery OK", "Budget REPROVED", "Waiting for Aproval", "Waiting parts", "Abandoned by customer", "Returned" }));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Customer"));
 
@@ -534,6 +560,7 @@ public class OSScreen extends javax.swing.JInternalFrame {
         btnOsUpdate.setToolTipText("Update");
         btnOsUpdate.setContentAreaFilled(false);
         btnOsUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOsUpdate.setEnabled(false);
         btnOsUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOsUpdateActionPerformed(evt);
@@ -543,10 +570,17 @@ public class OSScreen extends javax.swing.JInternalFrame {
         btnOsDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/remove.png"))); // NOI18N
         btnOsDelete.setToolTipText("Delete");
         btnOsDelete.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOsDelete.setEnabled(false);
+        btnOsDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOsDeleteActionPerformed(evt);
+            }
+        });
 
         btnOsPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/customerM/icons/printer.png"))); // NOI18N
         btnOsPrint.setToolTipText("printer OS");
         btnOsPrint.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnOsPrint.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -702,11 +736,11 @@ public class OSScreen extends javax.swing.JInternalFrame {
 
     private void txtCustIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCustIdMouseClicked
         // call the set_fields
-   
+
     }//GEN-LAST:event_txtCustIdMouseClicked
 
     private void tblCustMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustMouseClicked
-            set_fields();
+        set_fields();
     }//GEN-LAST:event_tblCustMouseClicked
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
@@ -718,7 +752,7 @@ public class OSScreen extends javax.swing.JInternalFrame {
     private void btnOsCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsCreateActionPerformed
         // call the method issue_os
         issue_os();
-        
+
     }//GEN-LAST:event_btnOsCreateActionPerformed
 
     private void btnOsReadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsReadActionPerformed
@@ -730,6 +764,11 @@ public class OSScreen extends javax.swing.JInternalFrame {
         // call the change_os metho
         change_os();
     }//GEN-LAST:event_btnOsUpdateActionPerformed
+
+    private void btnOsDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOsDeleteActionPerformed
+        // call the delete_os method
+        delete_os();
+    }//GEN-LAST:event_btnOsDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
