@@ -25,9 +25,14 @@ prerequisites:
 # clone the repository
 git clone https://github.com/Bruno-ferrariv/Customer-Management
 
+# open the DBcode in your MySQL and create the database and the tables
+
+# put your MySQL password in the ConnectionModule file wich is in the following route
+\Customer-Management\NetBeansProjects\CustomerM\src\br\com\customerM\dal
+
 # Open the project in NetBeans IDE
 
-# Install the rs2xml with the link bellow into the project
+# Install the rs2xml with the following link into the project
 https://sourceforge.net/projects/finalangelsanddemons/
 
 # execute the project with the run button
