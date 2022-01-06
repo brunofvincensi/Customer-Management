@@ -21,7 +21,7 @@ public class ConnectionModule {
        // storing information regarding the bank
        String url = "jdbc:mysql://localhost:3306/dbmanagement";
        String user = "root";
-       String password = "bruno2004117";
+       String password = "";
        
        // Establishing the connection with the base
         try {

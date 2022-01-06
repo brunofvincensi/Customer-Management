@@ -13,8 +13,6 @@ login varchar(15) not null unique,
 pass_word varchar(15) not null
 );
 
-desc tbusers;
-
 -- CRUD system
 
 -- Create
@@ -29,13 +27,8 @@ values(2, 'Administrador', '99999-9999', 'admin', 'admin');
 insert into tbusers(iduser, name_user, fone, login, pass_word)  
 values(3, 'Bill Gates', '99999-9999', 'bill', '123456');
 
--- Update
-update tbusers
-set fone = '8888-8888'
-where iduser=2;
 
 -- Delete
-delete from tbusers where iduser=3;
 
 -- customer table
 create table tbcustomer(
@@ -45,10 +38,6 @@ address varchar(100),
 fone varchar(50) not null,
 email varchar(50)
 );
-
-
-insert into tbcustomer(namecust, address, fone, email)
-values('Paulo', 'Tux street, 2015', '9999-9999', 'linus@linux.com');
 
 -------------------------------------
 -- order of service
@@ -64,12 +53,6 @@ idcust int not null,
 foreign key(idcust) references tbcustomer(idcust)
 );
 
-desc tbos;
-
-insert into tbos(equipment, defect, service, technician, amount, idcust)
-values('Laptop', 'it do not turn on', 'adapter exchange', 'Zé', 87.50, 1);
-
-select * from tbos;
 
 -- code to get the both information of tables
 select
