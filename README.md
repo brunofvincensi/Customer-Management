@@ -1,13 +1,17 @@
 # Customer-Management
 
 ## About
-An aplication desktop with Java and MySQL which allows you to mannage your customers and do orders of service to them.
+An aplication desktop with Java and MySQL which allows you to mannage your customers with CRUD method and do orders of service to them.
 
-(Aplicação desktop feito com Java e MySQL no qual permite você gerenciar seus clientes e fazer ordens de servico para eles- feito em Inglês)
+(Aplicação desktop feito com Java e MySQL no qual permite você gerenciar seus clientes com o método CRUD e fazer ordens de servico para eles- feito em Inglês)
+
+
+## MER
+![MER](https://github.com/Bruno-ferrariv/Customer-Management/blob/main/images/MER.PNG)
 
 ## Layout
 ![Login](https://github.com/Bruno-ferrariv/Customer-Management/blob/main/images/login.JPG)
-![Tela_client](https://github.com/Bruno-ferrariv/Customer-Management/blob/main/images/tela-cliente(certo).JPG) 
+
 ![chamada_os](https://github.com/Bruno-ferrariv/Customer-Management/blob/main/images/chamada_os.JPG)
 
 ## Technologies used
